@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class Car2DController : MonoBehaviour
 {
@@ -30,15 +31,20 @@ public class Car2DController : MonoBehaviour
         
         rb.velocity = ForwardVelocity() + RightVelocity()*driftFactor;
 
-        if (Input.GetButton("Accelerate"))
+        if (CrossPlatformInputManager.GetButton("Accelerate"))
         {
             rb.AddForce(transform.up * speedForce);
+        }
+
+        if (CrossPlatformInputManager.GetButton("Break"))
+        {
+            rb.AddForce(transform.up * -speedForce/2f);
         }
 
         float tf = Mathf.Lerp(0, torqueForce, rb.velocity.magnitude / 2.5f);
 
 
-        rb.angularVelocity = Input.GetAxis("Horizontal") * torqueForce ;
+        rb.angularVelocity = CrossPlatformInputManager.GetAxis("Horizontal") * torqueForce ;
 
 
 
