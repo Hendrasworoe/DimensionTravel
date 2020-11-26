@@ -12,6 +12,8 @@ public class Car2DController : MonoBehaviour
     public float maxStickyVelocity = 2.5f;
     public float minStickyVelocity = 1.5f;
 
+    public float carHealth = 100f;
+
     // Start is called before the first frame update
     void Start()
     {
