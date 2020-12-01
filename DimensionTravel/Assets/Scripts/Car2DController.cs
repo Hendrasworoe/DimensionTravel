@@ -11,14 +11,11 @@ public class Car2DController : MonoBehaviour
     public float driftFactorSlippy = 1f;
     public float maxStickyVelocity = 2.5f;
     public float minStickyVelocity = 1.5f;
+    public float boostFactor = 1.5f;
+
+    public bool boosted = false;
 
     public float carHealth = 100f;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void FixedUpdate()
@@ -35,7 +32,14 @@ public class Car2DController : MonoBehaviour
 
         if (CrossPlatformInputManager.GetButton("Accelerate"))
         {
-            rb.AddForce(transform.up * speedForce);
+            if(boosted)
+            {
+                rb.AddForce(transform.up * speedForce * boostFactor);
+            }
+            else
+            {
+                rb.AddForce(transform.up * speedForce);
+            }
         }
 
         if (CrossPlatformInputManager.GetButton("Break"))
