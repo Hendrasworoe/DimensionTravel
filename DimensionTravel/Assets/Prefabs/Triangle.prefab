@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 9145792117870016640}
   m_Layer: 0
   m_Name: Triangle
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -149,4 +149,6 @@ MonoBehaviour:
   driftFactorSlippy: 1
   maxStickyVelocity: 2.5
   minStickyVelocity: 1.5
+  boostFactor: 1.5
+  boosted: 0
   carHealth: 100
