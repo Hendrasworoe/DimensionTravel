@@ -6,10 +6,13 @@ public class Golem_Beta : MonoBehaviour
 {
     public float MoveSpeed = 5f;
     bool moveSwitch=true;
+    public Transform _player;
+
     // Start is called before the first frame update
     void Start()
     {
-
+        _player = GetComponent<Transform>();
+        
     }
 
     // Update is called once per frame

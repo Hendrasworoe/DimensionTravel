@@ -1,7 +1,13 @@
 fileFormatVersion: 2
 guid: 8faeac8047e67884087da3ae9dabc328
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -5423664654052787345
+    second: gas
+  - first:
+      213: 8077011433058289809
+    second: break
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -97,7 +103,49 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: gas
+      rect:
+        serializedVersion: 2
+        x: 1367
+        y: 435
+        width: 366
+        height: 1107
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f6b7752abb54bb4b0800000000000000
+      internalID: -5423664654052787345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: break
+      rect:
+        serializedVersion: 2
+        x: 807
+        y: 817
+        width: 440
+        height: 729
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1984532ca1f471070800000000000000
+      internalID: 8077011433058289809
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []

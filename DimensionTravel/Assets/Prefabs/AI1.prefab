@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7683495715807919187}
   m_Layer: 0
   m_Name: AI1
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -146,3 +146,4 @@ MonoBehaviour:
   MoveSpeed: 10
   IdleTimer: 3
   MoveTimer: 0
+  AOE: 5

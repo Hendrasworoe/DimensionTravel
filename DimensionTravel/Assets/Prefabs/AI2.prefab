@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -626427467284447814}
   m_Layer: 0
   m_Name: AI2
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -178,5 +178,6 @@ MonoBehaviour:
   MoveSpeed: 5
   stoppingDistance: 20
   retreatDistance: 10
+  AOE: 10
   projectile: {fileID: 5702996958541837319, guid: e418efb40505a8d49933109dd228c9da,
     type: 3}

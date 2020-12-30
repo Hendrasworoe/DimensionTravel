@@ -8,12 +8,12 @@ public class HealthBar : MonoBehaviour
     private Image healthBar;
     public float currentHealth;
     private float maxHealth= 100f;
-    Car2DController car;
+    public Car2DController car;
 
     private void Start()
     {
         healthBar = GetComponent<Image>();
-        car = FindObjectOfType<Car2DController>();
+        //car = FindObjectOfType<Car2DController>();
     }
 
     private void Update()

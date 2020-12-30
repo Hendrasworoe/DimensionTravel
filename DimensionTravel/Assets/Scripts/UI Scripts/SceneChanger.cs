@@ -7,7 +7,12 @@ public class SceneChanger : MonoBehaviour
 {
     public void PlayButton()
     {
-        SceneManager.LoadScene("Level1");
+        SceneManager.LoadScene("Map1");
+    }
+
+    public void RestartButton()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void QuitButton()

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class BoostButton : MonoBehaviour
 {
     public Car2DController car;
+    public Text notification;
     private int counter;
 
     public void BoostChangeStts()
@@ -14,10 +15,12 @@ public class BoostButton : MonoBehaviour
         if (counter % 2 == 1)
         {
             car.boosted = true;
+            notification.gameObject.SetActive(true);            
         }
         else
         {
             car.boosted = false;
+            notification.gameObject.SetActive(false);
         }
     }
 }

@@ -7,14 +7,15 @@ public class GroundAI : MonoBehaviour
     private Transform _player;
     public float MoveSpeed;
     public float IdleTimer = 2f;
-    public float MoveTimer;
+    public float MoveTimer = 2f;
+    public float AOE = 10f;
     private Vector2 startPos;
     private Vector2 curPos;
     // Start is called before the first frame update
     void Start()
     {
         startPos = transform.position;
-        MoveTimer = 3;
+        curPos = transform.position;
         _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
     }
 
@@ -40,19 +41,28 @@ public class GroundAI : MonoBehaviour
     }
     void tracking()
     {
-        if(MoveTimer>=IdleTimer)
+        if (Vector2.Distance(startPos, _player.position) < AOE) // 10 adalah jarak radiusnya, boleh diganti
         {
-            MoveSpeed = 10f;
-            //if(Vector2.Distance(transform.position, _player.position) >3)
-            transform.position = Vector2.MoveTowards(transform.position, _player.position, MoveSpeed * Time.deltaTime);
-            curPos = transform.position;
-        }else if(MoveTimer<IdleTimer)
+            if (MoveTimer >= IdleTimer)
+            {
+                MoveSpeed = 10f;
+                //if(Vector2.Distance(transform.position, _player.position) >3)
+                transform.position = Vector2.MoveTowards(transform.position, _player.position, MoveSpeed * Time.deltaTime);
+                curPos = transform.position;
+            }
+            else if (MoveTimer < IdleTimer)
+            {
+                transform.position = this.transform.position;
+
+            }
+        }
+        else
         {
             MoveSpeed = 3f;
             //if(Vector2.Distance(transform.position, _player.position) >3)
             transform.position = Vector2.MoveTowards(curPos, startPos, MoveSpeed * Time.deltaTime);
             curPos = transform.position;
         }
-            
+
     }
 }
