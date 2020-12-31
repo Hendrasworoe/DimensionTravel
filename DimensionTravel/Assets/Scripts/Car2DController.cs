@@ -7,47 +7,62 @@ using UnityStandardAssets.CrossPlatformInput;
 
 public class Car2DController : MonoBehaviour
 {
+    //car atribute
     public float speedForce = 10f;
     public float torqueForce = -200f;
     public float driftFactorSticky = 0.9f;
     public float driftFactorSlippy = 1f;
     public float maxStickyVelocity = 2.5f;
-    public float minStickyVelocity = 1.5f;
+    public float minSlippyVelocity = 1.5f;
     public float boostFactor = 1.5f;
+    public float carHealth = 100f;
+    public AudioSource carSound;
 
+    //boosted atribute
     public float velocityBoostedReq = 23f;
     public bool boosted = false;
+
+    //game over panel
     public GameObject gameOverPanel;
 
-    public float carHealth = 100f;
+    //dimensional button
     public Button boostButton;
     public Button switchDimensionBtn;
 
+    //collectible items status
+    private ItemsStatus itemsStatus;
     public int nextLevel = 0;
     private int numberItem;
 
+    //text UI
     public Text timerDisplay;
     public Text nextLevelNotif;
 
-    public float dimensionTimer = 5f;
+    //dimensional terms condition
+    public float dimensionTimer = 3f;
     public float timeLeft;
     private bool velocityAccepted = false;
 
-    private ItemsStatus itemsStatus;
+    //attendance on map
+    private bool map1WasAttended = true;
+    private bool map2WasAttended = false;
+    private bool map3WasAttended = false;
 
     private void Start()
     {
+        //set time left equal dimension timer that was set
         timeLeft = dimensionTimer;
-
-        //itemsStatus = (ItemsStatus)FindObjectOfType(typeof(ItemsStatus));
-
-        
     }
 
     private void Update()
     {
+        //setting car sound pitch
+        carSound.pitch = GetComponent<Rigidbody2D>().velocity.magnitude / 20;
+
+        //define items status variable
         itemsStatus = FindObjectOfType<ItemsStatus>();
 
+        //activate game object of dimension button (boost button) when minimum a item collected
         if (itemsStatus.currentLevel == 1 && (itemsStatus.items1_1 || itemsStatus.items1_2))
         {
             boostButton.gameObject.SetActive(true);
@@ -82,6 +97,8 @@ public class Car2DController : MonoBehaviour
             }
         }
 
+        //display count down timer to move to next map when minimum velocity requirement reached
+        //if not, disactive the display.
         if (velocityAccepted)
         {
             timeLeft -= Time.deltaTime;
@@ -94,25 +111,46 @@ public class Car2DController : MonoBehaviour
             timerDisplay.gameObject.SetActive(false);
         }
 
+        //do dimension travel if time left reached 0
         if(timeLeft < 0)
         {
-            SceneManager.LoadScene("Map" + nextLevel);
-            FindObjectOfType<ItemsStatus>().currentLevel = nextLevel;
+            //when a map was not attended
+            if (nextLevel == 2 && !map2WasAttended)
+            {
+                SceneManager.LoadScene("IntroMap" + nextLevel);
+                FindObjectOfType<ItemsStatus>().currentLevel = nextLevel;
+                map2WasAttended = true;
+            }
+            else if (nextLevel == 3 && !map3WasAttended)
+            {
+                SceneManager.LoadScene("IntroMap" + nextLevel);
+                FindObjectOfType<ItemsStatus>().currentLevel = nextLevel;
+                map3WasAttended = true;
+            }
+            else
+            {
+                SceneManager.LoadScene("Map" + nextLevel);
+                FindObjectOfType<ItemsStatus>().currentLevel = nextLevel;
+            }
         }
     }
 
     void FixedUpdate()
     {
+        //getting rigidbody component
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
 
+        //set drift factor
         float driftFactor = driftFactorSticky;
         if(RightVelocity().magnitude > maxStickyVelocity)
         {
             driftFactor = driftFactorSlippy;
         }
         
+        //velocity when drifting
         rb.velocity = ForwardVelocity() + RightVelocity()*driftFactor;
 
+        //accelerate
         if (CrossPlatformInputManager.GetButton("Accelerate"))
         {
             if(boosted)
@@ -130,17 +168,13 @@ public class Car2DController : MonoBehaviour
             rb.AddForce(transform.up * -speedForce/2f);
         }
 
-        float tf = Mathf.Lerp(0, torqueForce, rb.velocity.magnitude / 2.5f);
-
-
+        //turning
+        float tf = Mathf.Lerp(0, torqueForce, rb.velocity.magnitude / 3f);
         rb.angularVelocity = CrossPlatformInputManager.GetAxis("Horizontal") * torqueForce ;
 
-        //Debug.Log(rb.velocity.magnitude);
-
+        //setting requirement to doing dimension travel
         if (rb.velocity.magnitude > velocityBoostedReq)
         {
-            //Debug.Log("Change to level" + level);
-            //SceneManager.LoadScene("Map" + level);
             velocityAccepted = true;
         }
         else
@@ -148,9 +182,9 @@ public class Car2DController : MonoBehaviour
             velocityAccepted = false;
         }
 
+        //set when game over
         if (carHealth <= 0)
         {
-            Destroy(this.gameObject);
             gameOverPanel.SetActive(true);
         }
     }
@@ -167,11 +201,13 @@ public class Car2DController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        //take point damages if hit monster (tagged as enemy)
         if(collision.gameObject.tag == "Enemy")
         {
             carHealth -= 10f;
         }
 
+        //take point damages if hit monster's bullet
         if (collision.gameObject.tag == "Bullet")
         {
             carHealth -= 5f;
@@ -181,62 +217,76 @@ public class Car2DController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        //take point damages when enter to the lava once
         if (collision.gameObject.tag == "Lava")
         {
             carHealth -= 5f;
             Debug.Log("ngidak lava");
         }
-
-        if (collision.gameObject.tag == "Ice")
-        {
-            
-            Debug.Log("dalan lunyu");
-        }
-
+        
+        //when collect collectible item
         if (collision.gameObject.tag == "Collective")
         {
-            //boostButton.gameObject.SetActive(true);
             nextLevel = collision.gameObject.GetComponent<CollectiveItem>().nextLevel;
             numberItem = collision.gameObject.GetComponent<CollectiveItem>().numberItem;
 
+            //set active items status to collected
             switch (numberItem)
             {
                 case 1:
-                    //itemsStatus.items1_1 = true;
                     FindObjectOfType<ItemsStatus>().items1_1 = true;
                     break;
                 case 2:
-                    //itemsStatus.items1_2 = true;
                     FindObjectOfType<ItemsStatus>().items1_2 = true;
                     break;
                 case 3:
-                    //itemsStatus.items2_1 = true;
                     FindObjectOfType<ItemsStatus>().items2_1 = true;
                     break;
                 case 4:
-                    //itemsStatus.items2_1 = true;
                     FindObjectOfType<ItemsStatus>().items2_2 = true;
                     break;
                 case 5:
-                    //itemsStatus.items2_1 = true;
                     FindObjectOfType<ItemsStatus>().items3_1 = true;
                     break;
                 case 6:
-                    //itemsStatus.items2_1 = true;
                     FindObjectOfType<ItemsStatus>().items3_2 = true;
                     break;
             }
+        }
 
-            Destroy(collision.gameObject);
+        //jump into epilog
+        if (collision.gameObject.tag == "LastItem")
+        {
+            SceneManager.LoadScene("Epilog");
+            FindObjectOfType<ItemsStatus>().items1_1 = false;
+            FindObjectOfType<ItemsStatus>().items1_2 = false;
+            FindObjectOfType<ItemsStatus>().items2_1 = false;
+            FindObjectOfType<ItemsStatus>().items2_2 = false;
+            FindObjectOfType<ItemsStatus>().items3_1 = false;
+            FindObjectOfType<ItemsStatus>().items3_2 = false;
         }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
+        //take point damages when on lava
         if (collision.gameObject.tag == "Lava")
         {
             carHealth -= 0.5f;
             Debug.Log("ngidak lava");
+        }
+
+
+        if (collision.gameObject.tag == "Ice")
+        {
+            GetComponent<Rigidbody2D>().angularDrag = 0.2f;
+            GetComponent<Rigidbody2D>().drag = 0.7f;
+            Debug.Log("dalan lunyu");
+        }
+        else
+        {
+            GetComponent<Rigidbody2D>().angularDrag = 1f;
+            GetComponent<Rigidbody2D>().drag = 1f;
         }
     }
 }

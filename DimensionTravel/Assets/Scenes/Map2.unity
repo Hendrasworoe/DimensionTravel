@@ -21398,6 +21398,11 @@ PrefabInstance:
       propertyPath: nextLevel
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 4622630479166867868, guid: e9be3a544ffcf734f942f9f94491cd0f,
+        type: 3}
+      propertyPath: numberItem
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 4622630479166867870, guid: e9be3a544ffcf734f942f9f94491cd0f,
         type: 3}
       propertyPath: m_Sprite
@@ -22455,10 +22460,10 @@ RectTransform:
   m_Father: {fileID: 1985265790}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1, y: -7}
-  m_SizeDelta: {x: -1634.4869, y: -798.4302}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -0.000015258789, y: 0.000005721631}
+  m_SizeDelta: {x: 736.5206, y: 376.0813}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &804533306
 MonoBehaviour:
@@ -44755,7 +44760,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: Restart
 --- !u!222 &1521754682
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -60456,6 +60461,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Item
+      objectReference: {fileID: 0}
+    - target: {fileID: 4622630479166867868, guid: e9be3a544ffcf734f942f9f94491cd0f,
+        type: 3}
+      propertyPath: numberItem
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4622630479166867870, guid: e9be3a544ffcf734f942f9f94491cd0f,
         type: 3}

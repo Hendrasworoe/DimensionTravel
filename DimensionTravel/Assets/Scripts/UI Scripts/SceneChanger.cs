@@ -7,7 +7,7 @@ public class SceneChanger : MonoBehaviour
 {
     public void PlayButton()
     {
-        SceneManager.LoadScene("Map1");
+        SceneManager.LoadScene("IntroScene");
     }
 
     public void RestartButton()

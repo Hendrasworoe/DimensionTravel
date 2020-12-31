@@ -9,6 +9,7 @@ TagManager:
   - Bullet
   - Collective
   - Ice
+  - LastItem
   layers:
   - Default
   - TransparentFX
